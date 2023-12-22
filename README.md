@@ -23,8 +23,8 @@
 
 ```php
 // 引入队列类
-use Sunmking\ThinkQueue\Queue;
-
+use Sunmking\ThinkQueue\basic\BaseJob;
+use think\facade\Log;
 class TestJob extends BaseJob
 {
     public function doJob($id): bool
@@ -51,6 +51,7 @@ class TestJob extends BaseJob
 ```php
 // 引入队列类
 use Sunmking\ThinkQueue\Queue;
+use app\conmmon\jobs\TestJob;
 
 Queue::instance()->job(TestJob::class)
                         ->errorCount(3)
@@ -68,7 +69,9 @@ Queue::instance()->job(TestJob::class)
 
 ```php
 // 引入队列类
-use Sunmking\ThinkQueue\Queue;
+use Sunmking\ThinkQueue\traits\QueueTrait;
+use Sunmking\ThinkQueue\basic\BaseJob;
+use think\facade\Log;
 
 class TestJob extends BaseJob
 {
@@ -96,7 +99,7 @@ class TestJob extends BaseJob
 
 ```php
 // 引入队列类
-use Sunmking\ThinkQueue\Queue;
+use app\conmmon\jobs\TestJob;
 // 调用方法 方法名  入参  延时时间  失败重试次数  失败重试间隔时间
 TestJob::dispatch('doJob', [$id], 240, 4, 30);
 ```
