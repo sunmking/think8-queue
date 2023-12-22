@@ -65,7 +65,7 @@ Queue::instance()->job(TestJob::class)
 > 继承 BaseJob 类
 > 使用 trait QueueTrait
 > 实现 doJob 方法
-> 调用 push 方法
+> 调用 dispatch 方法
 
 ```php
 // 引入队列类
