@@ -33,7 +33,7 @@ class TestJob extends BaseJob
             $res = $this->dealJob($id);
         } catch (Exception $e) {
             $res = false;
-            Log::error("关闭出错 order_id:$id:".$e->getMessage());
+            Log::error("执行出错:".$e->getMessage());
         }
 
         return $res;
@@ -82,7 +82,7 @@ class TestJob extends BaseJob
             $res = $this->dealJob($id);
         } catch (Exception $e) {
             $res = false;
-            Log::error("关闭出错 order_id:$id:".$e->getMessage());
+            Log::error("执行出错:".$e->getMessage());
         }
 
         return $res;
