@@ -2,7 +2,7 @@
     "name": "sunmking/think8-queue",
     "description": "thinkphp8 queue lib",
     "type": "library",
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
         "topthink/think-queue": "^3.0"
