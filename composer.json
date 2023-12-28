@@ -1,16 +1,16 @@
 {
-    "name": "sunmking/think8-vite",
-    "description": "thinkphp8 vite lib",
+    "name": "sunmking/think8-queue",
+    "description": "thinkphp8 queue lib",
     "type": "library",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "topthink/think-framework": "^6.0|^8.0"
+        "topthink/think-queue": "^3.0"
     },
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Sunmking\\Think8Vite\\": "src/"
+            "Sunmking\\Think8Queue\\": "src/"
         }
     },
     "authors": [
