@@ -36,7 +36,7 @@ class LoggingMiddlewareTest extends TestCase
         
         $this->assertEquals('success', $result);
         $this->assertStringContainsString('Job started', implode(' ', LogStub::$messages));
-        $this->assertStringContainsString('Job completed', $output);
+        $this->assertStringContainsString('Job completed', implode(' ', LogStub::$messages));
     }
 
     public function testFailedJobLogging()
