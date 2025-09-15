@@ -8,6 +8,27 @@ if (!defined('APP_ENV')) {
     define('APP_ENV', 'testing');
 }
 
+// 全局日志收集器
+class TestLogCollector
+{
+    public static $messages = [];
+    
+    public static function reset()
+    {
+        self::$messages = [];
+    }
+    
+    public static function add($message)
+    {
+        self::$messages[] = $message;
+    }
+    
+    public static function getMessages()
+    {
+        return self::$messages;
+    }
+}
+
 // 模拟ThinkPHP环境
 if (!class_exists('think\facade\Queue')) {
     // 创建模拟的Queue facade
@@ -38,16 +59,14 @@ if (!class_exists('think\facade\Queue')) {
 if (!class_exists('think\facade\Log')) {
     class MockLog
     {
-        public static $messages = [];
-        
         public static function info($message, $context = [])
         {
-            self::$messages[] = $message;
+            TestLogCollector::add($message);
         }
 
         public static function error($message, $context = [])
         {
-            self::$messages[] = $message;
+            TestLogCollector::add($message);
         }
     }
 

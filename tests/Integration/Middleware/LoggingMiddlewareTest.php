@@ -12,10 +12,8 @@ class LoggingMiddlewareTest extends TestCase
     {
         parent::setUp();
         
-        // 重置 MockLog 的消息
-        if (class_exists('MockLog')) {
-            \MockLog::$messages = [];
-        }
+        // 重置日志消息
+        \TestLogCollector::reset();
     }
 
     public function testSuccessfulJobLogging()
@@ -29,13 +27,14 @@ class LoggingMiddlewareTest extends TestCase
         };
         
         // 重置日志消息
-        \MockLog::$messages = [];
+        \TestLogCollector::reset();
         
         $result = $middleware->handle($job, $data, $handler);
         
         $this->assertEquals('success', $result);
-        $this->assertStringContainsString('Job started', implode(' ', \MockLog::$messages));
-        $this->assertStringContainsString('Job completed', implode(' ', \MockLog::$messages));
+        $messages = \TestLogCollector::getMessages();
+        $this->assertStringContainsString('Job started', implode(' ', $messages));
+        $this->assertStringContainsString('Job completed', implode(' ', $messages));
     }
 
     public function testFailedJobLogging()
@@ -49,7 +48,7 @@ class LoggingMiddlewareTest extends TestCase
         };
         
         // 重置日志消息
-        \MockLog::$messages = [];
+        \TestLogCollector::reset();
         
         try {
             $middleware->handle($job, $data, $handler);
@@ -57,8 +56,9 @@ class LoggingMiddlewareTest extends TestCase
             // 预期异常
         }
         
-        $this->assertStringContainsString('Job started', implode(' ', \MockLog::$messages));
-        $this->assertStringContainsString('Job failed', implode(' ', \MockLog::$messages));
+        $messages = \TestLogCollector::getMessages();
+        $this->assertStringContainsString('Job started', implode(' ', $messages));
+        $this->assertStringContainsString('Job failed', implode(' ', $messages));
     }
 
     private function createMockJob(): Job
