@@ -51,4 +51,9 @@ class QueueManager implements QueueInterface
     {
         return $this->config;
     }
+
+    public function getConfig()
+    {
+        return $this->config;
+    }
 }
