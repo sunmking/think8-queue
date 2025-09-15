@@ -13,7 +13,7 @@ class LoggingMiddlewareTest extends TestCase
         parent::setUp();
         
         // 重置日志消息
-        resetTestLogMessages();
+        \resetTestLogMessages();
     }
 
     public function testSuccessfulJobLogging()
@@ -27,12 +27,12 @@ class LoggingMiddlewareTest extends TestCase
         };
         
         // 重置日志消息
-        resetTestLogMessages();
+        \resetTestLogMessages();
         
         $result = $middleware->handle($job, $data, $handler);
         
         $this->assertEquals('success', $result);
-        $messages = getTestLogMessages();
+        $messages = \getTestLogMessages();
         $this->assertStringContainsString('Job started', implode(' ', $messages));
         $this->assertStringContainsString('Job completed', implode(' ', $messages));
     }
@@ -48,7 +48,7 @@ class LoggingMiddlewareTest extends TestCase
         };
         
         // 重置日志消息
-        resetTestLogMessages();
+        \resetTestLogMessages();
         
         try {
             $middleware->handle($job, $data, $handler);
@@ -56,7 +56,7 @@ class LoggingMiddlewareTest extends TestCase
             // 预期异常
         }
         
-        $messages = getTestLogMessages();
+        $messages = \getTestLogMessages();
         $this->assertStringContainsString('Job started', implode(' ', $messages));
         $this->assertStringContainsString('Job failed', implode(' ', $messages));
     }
