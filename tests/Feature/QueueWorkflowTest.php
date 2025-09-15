@@ -44,9 +44,9 @@ class QueueWorkflowTest extends TestCase
         
         $jobData = $method->invoke($builder);
         
-        $data = isset($jobData['data']) ? $jobData['data'] : [];
-        
-        $this->assertEquals(['test' => 'data'], $data);
+        $expected = ['test' => 'data'];
+        $actual = isset($jobData['data']) ? $jobData['data'] : [];
+        $this->assertEquals($expected, $actual);
         $this->assertEquals(5, $jobData['attempts']);
         $this->assertEquals(120, $jobData['timeout']);
         $this->assertEquals(10, $jobData['priority']);
