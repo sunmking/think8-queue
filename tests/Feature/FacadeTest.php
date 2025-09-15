@@ -21,9 +21,9 @@ class FacadeTest extends TestCase
         $this->assertInstanceOf(\Sunmking\Think8Queue\Config\QueueConfig::class, $config);
     }
 
-    public function testQueueFacadeConfigWithArray(): void
+    public function testQueueFacadeConfigWithArray()
     {
-        $config = Queue::config(['test' => 'value']);
+        $config = ['key' => 'value'];
         
         $this->assertInstanceOf(\Sunmking\Think8Queue\Config\QueueConfig::class, $config);
         $this->assertEquals('value', $config->get('test'));

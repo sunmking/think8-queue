@@ -8,6 +8,15 @@ use think\queue\Job;
 
 class LoggingMiddlewareTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        // mock log 门面
+        if (!class_exists('log')) {
+            class_alias(\Sunmking\Think8Queue\Tests\Stubs\LogStub::class, 'log');
+        }
+    }
+
     public function testSuccessfulJobLogging(): void
     {
         $middleware = new LoggingMiddleware();
@@ -47,8 +56,8 @@ class LoggingMiddlewareTest extends TestCase
         }
         $output = ob_get_clean();
         
-        $this->assertStringContainsString('Job started', $output);
-        $this->assertStringContainsString('Job failed', $output);
+        $this->assertStringContainsString('Job started', LogStub::$messages);
+        $this->assertStringContainsString('Job failed', LogStub::$messages);
     }
 
     private function createMockJob(): Job

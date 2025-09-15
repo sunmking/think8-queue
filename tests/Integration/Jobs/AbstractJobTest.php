@@ -8,6 +8,15 @@ use think\queue\Job;
 
 class AbstractJobTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        // mock log 门面
+        if (!class_exists('log')) {
+            class_alias(\Sunmking\Think8Queue\Tests\Stubs\LogStub::class, 'log');
+        }
+    }
+
     public function testJobExecution(): void
     {
         $job = new TestJob();

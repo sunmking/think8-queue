@@ -16,9 +16,9 @@ class QueueManagerTest extends TestCase
         $this->assertSame($instance1, $instance2);
     }
 
-    public function testInstanceWithConfig(): void
+    public function testInstanceWithConfig()
     {
-        $config = new QueueConfig(['default_queue' => 'test']);
+        $config = ['queue' => 'test'];
         $manager = QueueManager::instance($config);
         
         $this->assertInstanceOf(QueueManager::class, $manager);

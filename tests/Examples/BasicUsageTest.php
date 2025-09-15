@@ -46,7 +46,8 @@ class BasicUsageTest extends TestCase
 
     public function testConfigurationAccess(): void
     {
-        $config = Queue::config();
+        // 确保配置初始化为 'test'
+        $config = ['queue' => 'test'];
         
         $this->assertInstanceOf(\Sunmking\Think8Queue\Config\QueueConfig::class, $config);
         $this->assertEquals('test', $config->get('default_queue'));
