@@ -47,6 +47,11 @@ class AbstractJobTest extends TestCase
         $data = ['test' => 'data'];
         $exception = new \RuntimeException('Test exception');
         
+        // 重置静态变量
+        TestJob::$failedCalled = false;
+        TestJob::$failedData = [];
+        TestJob::$failedException = null;
+        
         $job->failed($data, $exception);
         
         $this->assertTrue(TestJob::$failedCalled);
@@ -92,6 +97,14 @@ class TestJob extends AbstractJob
     {
         self::$executed = true;
         self::$executedData = $data;
+    }
+
+    public function failed(array $data, \Throwable $exception): void
+    {
+        parent::failed($data, $exception);
+        self::$failedCalled = true;
+        self::$failedData = $data;
+        self::$failedException = $exception;
     }
 }
 

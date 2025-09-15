@@ -18,7 +18,7 @@ class QueueManager implements QueueInterface
 
     public static function instance(?QueueConfig $config = null): self
     {
-        if (self::$instance === null) {
+        if (self::$instance === null || $config !== null) {
             self::$instance = new self($config ?? new QueueConfig());
         }
         return self::$instance;

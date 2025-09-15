@@ -77,10 +77,11 @@ class JobBuilder implements JobBuilderInterface
 
     private function buildJobData(): array
     {
-        return array_merge($this->data, [
+        return [
+            'data' => $this->data,
             'attempts' => $this->attempts ?: $this->config->get('default_attempts'),
             'timeout' => $this->timeout ?: $this->config->get('default_timeout'),
             'priority' => $this->priority ?: $this->config->get('default_priority'),
-        ]);
+        ];
     }
 }

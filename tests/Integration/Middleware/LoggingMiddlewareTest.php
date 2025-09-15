@@ -60,7 +60,7 @@ class LoggingMiddlewareTest extends TestCase
         $output = ob_get_clean();
         
         $this->assertStringContainsString('Job started', implode(' ', LogStub::$messages));
-        $this->assertStringContainsString('Job failed', LogStub::$messages);
+        $this->assertStringContainsString('Job failed', implode(' ', LogStub::$messages));
     }
 
     private function createMockJob(): Job
