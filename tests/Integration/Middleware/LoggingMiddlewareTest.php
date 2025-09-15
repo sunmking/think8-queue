@@ -5,16 +5,16 @@ namespace Sunmking\Think8Queue\Tests\Integration\Middleware;
 use Sunmking\Think8Queue\Middleware\LoggingMiddleware;
 use Sunmking\Think8Queue\Tests\TestCase;
 use think\queue\Job;
-use Sunmking\Think8Queue\Tests\Integration\Middleware\LogStub;
 
 class LoggingMiddlewareTest extends TestCase
 {
     protected function setUp(): void
     {
         parent::setUp();
-        LogStub::reset();
-        if (!class_exists('log')) {
-            class_alias(LogStub::class, 'log');
+        
+        // 重置 MockLog 的消息
+        if (class_exists('MockLog')) {
+            \MockLog::$messages = [];
         }
     }
 
@@ -28,15 +28,14 @@ class LoggingMiddlewareTest extends TestCase
             return 'success';
         };
         
-        LogStub::info('Job started');
-        // 捕获输出
-        ob_start();
+        // 重置日志消息
+        \MockLog::$messages = [];
+        
         $result = $middleware->handle($job, $data, $handler);
-        $output = ob_get_clean();
         
         $this->assertEquals('success', $result);
-        $this->assertStringContainsString('Job started', implode(' ', LogStub::$messages));
-        $this->assertStringContainsString('Job completed', implode(' ', LogStub::$messages));
+        $this->assertStringContainsString('Job started', implode(' ', \MockLog::$messages));
+        $this->assertStringContainsString('Job completed', implode(' ', \MockLog::$messages));
     }
 
     public function testFailedJobLogging()
@@ -49,18 +48,17 @@ class LoggingMiddlewareTest extends TestCase
             throw new \RuntimeException('Job failed');
         };
         
-        LogStub::info('Job started');
-        // 捕获输出
-        ob_start();
+        // 重置日志消息
+        \MockLog::$messages = [];
+        
         try {
             $middleware->handle($job, $data, $handler);
         } catch (\RuntimeException $e) {
             // 预期异常
         }
-        $output = ob_get_clean();
         
-        $this->assertStringContainsString('Job started', implode(' ', LogStub::$messages));
-        $this->assertStringContainsString('Job failed', implode(' ', LogStub::$messages));
+        $this->assertStringContainsString('Job started', implode(' ', \MockLog::$messages));
+        $this->assertStringContainsString('Job failed', implode(' ', \MockLog::$messages));
     }
 
     private function createMockJob(): Job

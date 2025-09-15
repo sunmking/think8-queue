@@ -38,14 +38,16 @@ if (!class_exists('think\facade\Queue')) {
 if (!class_exists('think\facade\Log')) {
     class MockLog
     {
+        public static $messages = [];
+        
         public static function info($message, $context = [])
         {
-            echo "[INFO] $message\n";
+            self::$messages[] = $message;
         }
 
         public static function error($message, $context = [])
         {
-            echo "[ERROR] $message\n";
+            self::$messages[] = $message;
         }
     }
 
@@ -68,4 +70,3 @@ if (!class_exists('think\facade\Config')) {
 
     class_alias('MockConfig', 'think\facade\Config');
 }
-
