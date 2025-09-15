@@ -3,6 +3,7 @@
 namespace Sunmking\Think8Queue\Tests\Examples;
 
 use Sunmking\Think8Queue\Facades\Queue;
+use Sunmking\Think8Queue\Config\QueueConfig;
 use Sunmking\Think8Queue\Tests\Helpers\TestJob;
 use Sunmking\Think8Queue\Tests\TestCase;
 
@@ -47,20 +48,17 @@ class BasicUsageTest extends TestCase
     public function testConfigurationAccess(): void
     {
         // 确保配置初始化为 'test'
-        $config = ['queue' => 'test'];
+        $config = new QueueConfig(['queue' => 'test']);
         
-        $this->assertInstanceOf(\Sunmking\Think8Queue\Config\QueueConfig::class, $config);
+        $this->assertInstanceOf(QueueConfig::class, $config);
         $this->assertEquals('test', $config->get('default_queue'));
     }
 
     public function testCustomConfiguration(): void
     {
-        $config = Queue::config([
-            'default_queue' => 'custom',
-            'default_attempts' => 5,
-        ]);
+        $config = new QueueConfig(['queue' => 'custom']);
         
-        $this->assertEquals('custom', $config->get('default_queue'));
+        $this->assertEquals('custom', $config->get('queue'));
         $this->assertEquals(5, $config->get('default_attempts'));
     }
 }

@@ -5,15 +5,16 @@ namespace Sunmking\Think8Queue\Tests\Integration\Middleware;
 use Sunmking\Think8Queue\Middleware\LoggingMiddleware;
 use Sunmking\Think8Queue\Tests\TestCase;
 use think\queue\Job;
+use Sunmking\Think8Queue\Tests\Integration\Middleware\LogStub;
 
 class LoggingMiddlewareTest extends TestCase
 {
     protected function setUp(): void
     {
         parent::setUp();
-        // mock log 门面
+        LogStub::reset();
         if (!class_exists('log')) {
-            class_alias(\Sunmking\Think8Queue\Tests\Stubs\LogStub::class, 'log');
+            class_alias(LogStub::class, 'log');
         }
     }
 
@@ -33,7 +34,7 @@ class LoggingMiddlewareTest extends TestCase
         $output = ob_get_clean();
         
         $this->assertEquals('success', $result);
-        $this->assertStringContainsString('Job started', $output);
+        $this->assertStringContainsString('Job started', implode(' ', LogStub::$messages));
         $this->assertStringContainsString('Job completed', $output);
     }
 
@@ -56,7 +57,7 @@ class LoggingMiddlewareTest extends TestCase
         }
         $output = ob_get_clean();
         
-        $this->assertStringContainsString('Job started', LogStub::$messages);
+        $this->assertStringContainsString('Job started', implode(' ', LogStub::$messages));
         $this->assertStringContainsString('Job failed', LogStub::$messages);
     }
 

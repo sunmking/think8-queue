@@ -4,6 +4,7 @@ namespace Sunmking\Think8Queue\Tests\Feature;
 
 use Sunmking\Think8Queue\Facades\Queue;
 use Sunmking\Think8Queue\Tests\TestCase;
+use Sunmking\Think8Queue\Config\QueueConfig;
 
 class FacadeTest extends TestCase
 {
@@ -18,14 +19,13 @@ class FacadeTest extends TestCase
     {
         $config = Queue::config();
         
-        $this->assertInstanceOf(\Sunmking\Think8Queue\Config\QueueConfig::class, $config);
+        $this->assertInstanceOf(QueueConfig::class, $config);
     }
 
     public function testQueueFacadeConfigWithArray()
     {
-        $config = ['key' => 'value'];
-        
-        $this->assertInstanceOf(\Sunmking\Think8Queue\Config\QueueConfig::class, $config);
+        $config = new QueueConfig(['key' => 'value']);
+        $this->assertInstanceOf(QueueConfig::class, $config);
         $this->assertEquals('value', $config->get('test'));
     }
 }
