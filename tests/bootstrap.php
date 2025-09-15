@@ -8,24 +8,26 @@ if (!defined('APP_ENV')) {
     define('APP_ENV', 'testing');
 }
 
-// 全局日志收集器
-class TestLogCollector
-{
-    public static $messages = [];
-    
-    public static function reset()
+// 全局日志收集器 - 确保在全局命名空间中
+if (!class_exists('TestLogCollector', false)) {
+    class TestLogCollector
     {
-        self::$messages = [];
-    }
-    
-    public static function add($message)
-    {
-        self::$messages[] = $message;
-    }
-    
-    public static function getMessages()
-    {
-        return self::$messages;
+        public static $messages = [];
+        
+        public static function reset()
+        {
+            self::$messages = [];
+        }
+        
+        public static function add($message)
+        {
+            self::$messages[] = $message;
+        }
+        
+        public static function getMessages()
+        {
+            return self::$messages;
+        }
     }
 }
 

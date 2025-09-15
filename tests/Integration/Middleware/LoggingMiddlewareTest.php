@@ -13,7 +13,9 @@ class LoggingMiddlewareTest extends TestCase
         parent::setUp();
         
         // 重置日志消息
-        \TestLogCollector::reset();
+        if (class_exists('TestLogCollector')) {
+            \TestLogCollector::reset();
+        }
     }
 
     public function testSuccessfulJobLogging()
