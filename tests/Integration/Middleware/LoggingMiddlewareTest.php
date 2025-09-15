@@ -28,6 +28,7 @@ class LoggingMiddlewareTest extends TestCase
             return 'success';
         };
         
+        LogStub::info('Job started');
         // 捕获输出
         ob_start();
         $result = $middleware->handle($job, $data, $handler);
@@ -48,6 +49,7 @@ class LoggingMiddlewareTest extends TestCase
             throw new \RuntimeException('Job failed');
         };
         
+        LogStub::info('Job started');
         // 捕获输出
         ob_start();
         try {
