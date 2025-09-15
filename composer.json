@@ -7,11 +7,27 @@
     "require": {
         "topthink/think-queue": "^3.0"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "mockery/mockery": "^1.4"
+    },
     "license": "MIT",
     "autoload": {
         "psr-4": {
             "Sunmking\\Think8Queue\\": "src/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Sunmking\\Think8Queue\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "test-coverage": "phpunit --coverage-html coverage --coverage-clover coverage.xml",
+        "test-unit": "phpunit --testsuite Unit",
+        "test-integration": "phpunit --testsuite Integration",
+        "test-feature": "phpunit --testsuite Feature"
     },
     "authors": [
         {

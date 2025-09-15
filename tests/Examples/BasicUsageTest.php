@@ -1,0 +1,65 @@
+<?php
+
+namespace Sunmking\Think8Queue\Tests\Examples;
+
+use Sunmking\Think8Queue\Facades\Queue;
+use Sunmking\Think8Queue\Tests\Helpers\TestJob;
+use Sunmking\Think8Queue\Tests\TestCase;
+
+class BasicUsageTest extends TestCase
+{
+    public function testBasicJobCreation(): void
+    {
+        // 重置测试状态
+        TestJob::reset();
+        
+        // 创建任务
+        $builder = Queue::job(TestJob::class);
+        
+        $this->assertInstanceOf(\Sunmking\Think8Queue\Builder\JobBuilder::class, $builder);
+    }
+
+    public function testJobWithData(): void
+    {
+        TestJob::reset();
+        
+        $builder = Queue::job(TestJob::class)
+            ->data(['id' => 123, 'name' => 'test']);
+        
+        $this->assertInstanceOf(\Sunmking\Think8Queue\Builder\JobBuilder::class, $builder);
+    }
+
+    public function testJobWithOptions(): void
+    {
+        TestJob::reset();
+        
+        $builder = Queue::job(TestJob::class)
+            ->data(['id' => 123])
+            ->delay(60)
+            ->attempts(5)
+            ->timeout(120)
+            ->priority(10)
+            ->queue('test_queue');
+        
+        $this->assertInstanceOf(\Sunmking\Think8Queue\Builder\JobBuilder::class, $builder);
+    }
+
+    public function testConfigurationAccess(): void
+    {
+        $config = Queue::config();
+        
+        $this->assertInstanceOf(\Sunmking\Think8Queue\Config\QueueConfig::class, $config);
+        $this->assertEquals('test', $config->get('default_queue'));
+    }
+
+    public function testCustomConfiguration(): void
+    {
+        $config = Queue::config([
+            'default_queue' => 'custom',
+            'default_attempts' => 5,
+        ]);
+        
+        $this->assertEquals('custom', $config->get('default_queue'));
+        $this->assertEquals(5, $config->get('default_attempts'));
+    }
+}
