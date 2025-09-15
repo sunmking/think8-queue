@@ -26,7 +26,7 @@ class FacadeTest extends TestCase
     {
         $config = new QueueConfig(['key' => 'value']);
         $this->assertInstanceOf(QueueConfig::class, $config);
-        $this->assertEquals('value', $config->get('test'));
+        $this->assertEquals('value', $config->get('key'));
     }
 }
 

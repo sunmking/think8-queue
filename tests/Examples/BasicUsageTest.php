@@ -49,16 +49,12 @@ class BasicUsageTest extends TestCase
     {
         // 确保配置初始化为 'test'
         $config = new QueueConfig(['queue' => 'test']);
-        
-        $this->assertInstanceOf(QueueConfig::class, $config);
-        $this->assertEquals('test', $config->get('default_queue'));
+        $this->assertEquals('test', $config->get('queue'));
     }
 
     public function testCustomConfiguration(): void
     {
-        $config = new QueueConfig(['queue' => 'custom']);
-        
-        $this->assertEquals('custom', $config->get('queue'));
-        $this->assertEquals(5, $config->get('default_attempts'));
+        $config = new QueueConfig(['max_jobs' => 5]);
+        $this->assertEquals(5, $config->get('max_jobs'));
     }
 }

@@ -18,7 +18,7 @@ class LoggingMiddlewareTest extends TestCase
         }
     }
 
-    public function testSuccessfulJobLogging(): void
+    public function testSuccessfulJobLogging()
     {
         $middleware = new LoggingMiddleware();
         $job = $this->createMockJob();
@@ -38,7 +38,7 @@ class LoggingMiddlewareTest extends TestCase
         $this->assertStringContainsString('Job completed', $output);
     }
 
-    public function testFailedJobLogging(): void
+    public function testFailedJobLogging()
     {
         $middleware = new LoggingMiddleware();
         $job = $this->createMockJob();

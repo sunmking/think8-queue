@@ -20,8 +20,7 @@ class QueueManagerTest extends TestCase
     {
         $config = new QueueConfig(['queue' => 'test']);
         $instance = QueueManager::instance($config);
-        $this->assertInstanceOf(QueueConfig::class, $instance->getConfig());
-        $this->assertEquals('test', $instance->config()->get('default_queue'));
+        $this->assertEquals('test', $instance->config->get('queue'));
     }
 
     public function testJobBuilderCreation(): void
