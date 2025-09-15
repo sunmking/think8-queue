@@ -3,7 +3,7 @@
          colors="true"
          verbose="true">
     <testsuites>
-        <testsuite name="Application Test Suite">
+        <testsuite name="Default">
             <directory>./tests</directory>
         </testsuite>
     </testsuites>
