@@ -24,6 +24,16 @@ jobs:
             echo "composer install failed, trying composer update..."
             composer update --prefer-dist --no-progress --no-suggest
           )
+      - name: Check phpunit.xml.dist
+        run: |
+          if [ ! -f phpunit.xml.dist ]; then
+            echo "phpunit.xml.dist not found! Please add it to the project root."
+            exit 1
+          fi
       - name: Run tests
         run: |
+          if [ ! -f vendor/bin/phpunit ]; then
+            echo "phpunit not installed! Please check composer.json require-dev."
+            exit 1
+          fi
           ./vendor/bin/phpunit --configuration phpunit.xml.dist
